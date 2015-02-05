@@ -1,0 +1,210 @@
+
+// Helpers
+// -------------------------------
+
+// ngAnimate
+//@import "helpers/animate";
+// Fade in typekit
+//@import "helpers/typekit";
+
+*
+{
+  box-sizing: border-box;
+}
+
+.modal-backdrop {
+   position: fixed !important;
+   top: 0px;
+   left: 0px;
+   height:100%;
+   width:100%;
+   background: #000;
+   z-index: 1999;
+   opacity: 0.5;
+}
+
+.modal-holder {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: $modal-height+40px;
+  width: $modal-width+80px;
+  margin-top: -($modal-height+40px)/2;
+  margin-left: -($modal-width+80px)/2;
+  background: transparent;
+  z-index: 2000;
+  padding: 30px 15px;
+
+  .modal-box {
+    margin: 0 auto;
+    width: 100%;
+    background: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+    position: relative;
+  }
+}
+
+
+@media screen and (min-width: 992px)
+{
+  .modal-box {
+    width: 50%;
+    padding: 30px;
+  }
+}
+
+
+.angular-media-field {
+
+  .thumbnails {
+    display: inline;
+  }
+
+  .thumbnail {
+    width: 100px;
+    height: 120px;
+    display: inline-block;
+    margin: 10px;
+    position: relative;
+
+    .thumbnail-title {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: .9em;
+    }
+
+    .btn {
+      display: none;
+      top: 10px;
+      position: absolute;
+
+      &.thumbnail-edit {
+        left: 10px;
+      }
+      &.thumbnail-remove {
+        right: 10px;
+      }
+    }
+
+    .download-icon {
+      font-size: 30px;
+      color: #ccc;
+    }
+
+  }
+
+  .thumbnail:hover .btn {
+    display: block;
+  }
+
+  .media-select {
+    display: inline-block;
+  }
+
+}
+
+.drop-zone,
+.thumbnail.drop-zone {
+  border: 2px dashed #ccc;
+  padding: 10px;
+  text-align: center;
+
+  .or {
+    font-size: .8em;
+    text-transform: uppercase;
+    margin: 2em 0;
+  }
+
+  .drop-label {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+
+  .file-upload {
+    margin: 0 auto;
+  }
+
+  .description {
+    color: #aaa;
+    font-size: .9em;
+    text-align: left;
+    width: 85%;
+    margin: 5px auto;
+  }
+}
+
+form {
+  width: $modal-width;
+  height: $modal-height;
+  position: relative;
+
+  select {
+    max-width: 200px;
+  }
+}
+
+.browser {
+  position: relative;
+  margin-top: 10px;
+
+  .scroll-wrapper {
+    width: $modal-width;
+    height: $modal-height;
+    overflow-y: scroll;
+    ms-overflow-x: hidden;  
+  }
+
+  .left,
+  .scroll-wrapper.active {
+    width: $modal-width - $modal-sidebar-width - 10px;
+  }
+
+  .thumb {
+    background: center no-repeat;
+    width: $thumb-size;
+    height: $thumb-size;
+    float: left;
+    border: 5px solid white;
+    cursor: pointer;
+
+    &.active {
+      border-color: #E9D24F;
+      background-color: #E9D24F;
+    }
+  }
+
+  .sidebar {
+    width: $modal-sidebar-width;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: white;
+
+    h3,
+    h5 {
+      margin: 0;
+    }
+
+    .preview {
+      text-align: center;
+
+      img {
+        max-height: 200px;
+        margin: 0 auto;
+      }
+    }
+    
+
+    .bottom-right {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+  } 
+
+}
+

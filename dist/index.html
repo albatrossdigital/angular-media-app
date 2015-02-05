@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/ngImgCrop/compile/unminified/ng-img-crop.css">
+  
+  <link rel="stylesheet" href="css/libraries.min.css">
+  <link rel="stylesheet" href="css/app.min.css">
+  </head>
+  <body page-ready>
+
+<script>appUrl='';</script>
+  <form class="angular-media-field" ng-app="app">
+    <div ui-view></div>
+    <div class="thumbnails" ng-class="" ng-controller="thumbnails" ng-init="init({
+  apiUrl: 'http://liftoff.local/api/angular-media/',
+  fieldName: '',
+  files: [],
+  multiple: 1,
+  flickrApiKey: ''
+});"><!-- nv-file-drop="" uploader="uploader"-->
+      <div class="thumbnail drop-zone" ng-if="!files[0]">
+        <div class="download-icon"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></div>
+        Drop files here
+      </div>
+      <a href class="thumbnail" ng-repeat="file in files" title="{{file.title}}">
+        <img ng-src="{{file.thumbUrl}}" />
+        <div class="thumbnail-title">{{file.title}}</div>
+          <button type="button" class="btn btn-default btn-xs thumbnail-edit" ng-click="item.remove()"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-danger btn-xs thumbnail-remove" ng-click="item.remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      </a>
+    </div>
+    <a class="btn btn-primary media-select" ui-sref="modal.upload"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Select</a>
+  </form>
+
+  <pre>{{files}}</pre>
+
+
+  <script src="js/vendor/libraries.min.js"></script>
+
+  <script src="js/app.min.js"></script>
+  </body>
+</html>

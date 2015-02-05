@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/ngImgCrop/compile/unminified/ng-img-crop.css">
+  
+  <!-- build:css css/libraries.min.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/ngImgCrop/compile/minified/ng-img-crop.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css css/app.min.css -->
+  <link rel="stylesheet" href="css/app.css">
+  <!-- endbuild -->
+  </head>
+  <body page-ready>
+
+<script>appUrl='';</script>
+  <form class="angular-media-field" ng-app="app">
+    <div ui-view></div>
+    <div class="thumbnails" ng-class="" ng-controller="thumbnails" ng-init="init({
+  apiUrl: 'http://liftoff.local/api/angular-media/',
+  fieldName: '',
+  files: [],
+  multiple: 1,
+  flickrApiKey: ''
+});"><!-- nv-file-drop="" uploader="uploader"-->
+      <div class="thumbnail drop-zone" ng-if="!files[0]">
+        <div class="download-icon"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></div>
+        Drop files here
+      </div>
+      <a href class="thumbnail" ng-repeat="file in files" title="{{file.title}}">
+        <img ng-src="{{file.thumbUrl}}" />
+        <div class="thumbnail-title">{{file.title}}</div>
+          <button type="button" class="btn btn-default btn-xs thumbnail-edit" ng-click="item.remove()"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-danger btn-xs thumbnail-remove" ng-click="item.remove()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      </a>
+    </div>
+    <a class="btn btn-primary media-select" ui-sref="modal.upload"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Select</a>
+  </form>
+
+  <pre>{{files}}</pre>
+
+
+  <!-- build:js js/vendor/libraries.min.js -->
+  <!-- bower:js -->
+  <script src="bower_components/es5-shim/es5-shim.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bindonce/bindonce.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/infinite-scroll/jquery.infinitescroll.js"></script>
+  <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+  <script src="bower_components/ngImgCrop/compile/minified/ng-img-crop.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js js/vendor/bootstrap.min.js -->
+  <!-- endbuild -->
+  <!-- build:js js/app.min.js -->
+  <script src="js/app.js"></script>
+  <!-- Utilities -->
+  <!-- Routes -->
+  <script src="js/routes/coreRoutes.js"></script>
+  <script src="js/routes/flickrRoutes.js"></script>
+  <!-- Providers -->
+  <script src="js/providers/flickrResources.js"></script>
+  <script src="js/providers/coreResources.js"></script>
+  <!-- Controllers -->
+  <script src="js/controllers/thumnailsCtrl.js"></script>
+  <!-- Filters -->
+  <!-- Directives -->
+  <!-- endbuild -->
+  </body>
+</html>
