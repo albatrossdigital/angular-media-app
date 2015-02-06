@@ -14,11 +14,20 @@ angular.module('app.core')
     $rootScope.apiUrl = params.apiUrl != undefined ? params.apiUrl : '';
     $rootScope.multiple = params.multiple != undefined ? params.multiple : false;
     $rootScope.files = params.files != undefined ? params.files : [];
+      console.log($rootScope);
+  console.log(params);
   }
+
+
 
   // Deal with drop to upload
   var uploader = $scope.uploader = new FileUploader({
       url: $rootScope.apiUrlUpload + 'upload',
       autoUpload: true
   });
+
+  $scope.remove = function(key) {
+    console.log('remove');
+    $rootScope.files.splice(key, 1);
+  }
 })

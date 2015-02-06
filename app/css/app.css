@@ -37,13 +37,14 @@
     padding: 30px; } }
 
 .angular-media-field .thumbnails {
-  display: inline; }
+  display: inline;
+  margin-left: -10px; }
 .angular-media-field .thumbnail {
   width: 100px;
   height: 120px;
-  display: inline-block;
   margin: 10px;
-  position: relative; }
+  position: relative;
+  float: left; }
   .angular-media-field .thumbnail .thumbnail-title {
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -58,12 +59,17 @@
     .angular-media-field .thumbnail .btn.thumbnail-remove {
       right: 10px; }
   .angular-media-field .thumbnail .download-icon {
-    font-size: 30px;
+    font-size: 15px;
     color: #ccc; }
+  .angular-media-field .thumbnail .or {
+    margin: 0.5em 0 !important; }
+  .angular-media-field .thumbnail .btn.media-select {
+    display: block;
+    position: relative; }
 .angular-media-field .thumbnail:hover .btn {
   display: block; }
-.angular-media-field .media-select {
-  display: inline-block; }
+.angular-media-field .clearfix {
+  clear: both; }
 
 .drop-zone, .thumbnail.drop-zone {
   border: 2px dashed #ccc;

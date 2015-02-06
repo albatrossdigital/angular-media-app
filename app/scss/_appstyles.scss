@@ -60,14 +60,15 @@
 
   .thumbnails {
     display: inline;
+    margin-left: -10px;
   }
 
   .thumbnail {
     width: 100px;
     height: 120px;
-    display: inline-block;
     margin: 10px;
     position: relative;
+    float: left;
 
     .thumbnail-title {
       text-overflow: ellipsis;
@@ -90,8 +91,17 @@
     }
 
     .download-icon {
-      font-size: 30px;
+      font-size: 15px;
       color: #ccc;
+    }
+
+    .or {
+      margin: .5em 0 !important;
+    }
+
+    .btn.media-select {
+      display: block;
+      position: relative;
     }
 
   }
@@ -100,8 +110,8 @@
     display: block;
   }
 
-  .media-select {
-    display: inline-block;
+  .clearfix {
+    clear: both;
   }
 
 }

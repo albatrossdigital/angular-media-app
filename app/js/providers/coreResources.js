@@ -15,11 +15,13 @@ angular.module('app.core')
 .factory('CoreFile', function ($resource, $rootScope) {
     return $resource($rootScope.apiUrl + 'file', {
       format: 'json',
-      type: '@fid',
-      type: '@name',
-      type: '@title',
-      type: '@alt',
-      type: '@license',
-      type: '@source',
+      fid: '@fid',
+      filename: '@filename',
+      name: '@name',
+      title: '@title',
+      alt: '@alt',
+      license: '@license',
+      source: '@source',
+      url: '@url'
     }, { 'load': { method: 'JSON' } });
 })

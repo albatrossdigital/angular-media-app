@@ -148,10 +148,40 @@ angular.module('app.core', [
 
 
 .controller('upload', function($scope, $rootScope, $state, $stateParams, FileUploader){
+  $scope.uploading = false;
+  $scope.selected = [];
+
   var uploader = $scope.uploader = new FileUploader({
-      url: $rootScope.apiUrlUpload + 'upload',
-      autoUpload: true
+    url: $rootScope.apiUrlUpload + 'upload',
+    autoUpload: true
   });
+  uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    console.info('onSuccessItem', fileItem, response, status, headers);
+    $scope.selected.push(response);
+  };
+  uploader.onBeforeUploadItem = function(item) {
+    console.info('onBeforeUploadItem', item);
+    $scope.uploading = true;
+  };
+  uploader.onCompleteAll = function() {
+    console.info('onCompleteAll');
+    $scope.uploading = false;
+  };
+
+  $scope.submit = function($event) {
+    //$scope.filters.page++;
+    console.log($scope.selected);
+
+    Array.prototype.push.apply($rootScope.files, $scope.selected);
+    $scope.selected = [];
+    $state.go('base');
+
+    $event.preventDefault();
+
+    //var newData = Flickr.load($scope.filters);
+    //Array.prototype.push.apply($scope.items, newData);
+  }
+  
 
   // CALLBACKS
 

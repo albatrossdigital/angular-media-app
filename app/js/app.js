@@ -10,7 +10,7 @@ angular.module('app', [
   'app.core',
   'app.flickr',
   'ui.router',
-  'ui.bootstrap',
+  //'ui.bootstrap',
   'ngSanitize',
   //'ngAnimate', // @todo: caused bugs w ng-include: https://github.com/angular/angular.js/issues/8900
   'ngTouch',

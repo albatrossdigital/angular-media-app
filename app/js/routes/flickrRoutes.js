@@ -13,7 +13,7 @@ angular.module('app.flickr', [
          .state("modal.flickr", {
           url: "/flickr",
           templateUrl: appUrl + 'views/flickr.html',
-          controller: function($scope, $rootScope, $state, Flickr){
+          controller: function($scope, $rootScope, $state, Flickr, CoreFile){
             $scope.filters = {
               method: 'flickr.photos.search',
               tags: 'baltimore',
@@ -24,7 +24,6 @@ angular.module('app.flickr', [
             $scope.licenses = Flickr.load({method: 'flickr.photos.licenses.getInfo'});
 
             $scope.selected = [];
-            $scope.items = [];
             $scope.active = undefined;
             
             $scope.loadItems = function(push) {
@@ -41,6 +40,7 @@ angular.module('app.flickr', [
                   });
                 });
                 if (push !== undefined && push == true) {
+                  $scope.items = $scope.items != undefined ? $scope.items : [];
                   Array.prototype.push.apply($scope.items, structured);
                 }
                 else {
@@ -78,8 +78,10 @@ angular.module('app.flickr', [
                   }
                   Flickr.load({method: 'flickr.photos.getInfo', photo_id: item.id, secret: item.secret}, function(data) {
                     $scope.active.previewUrl = 'https://farm' + item.farm + '.staticflickr.com/'+ item.server +'/'+ item.id + '_'+ item.secret +'_m.jpg';
+                    $scope.active.url = 'https://farm' + item.farm + '.staticflickr.com/'+ item.server +'/'+ item.id + '_'+ item.secret +'.jpg';  // @todo: try to get original?
                     $scope.active.name = data.photo.title._content;
-                    $scope.active.link = data.photo.urls.url[0]._content;
+                    $scope.active.filename = $scope.active.name + '.jpg';
+                    $scope.active.source = data.photo.urls.url[0]._content;
                     $scope.active.user = data.photo.owner.realname ? data.photo.owner.realname : data.photo.owner.username;
                     $scope.active.userLink = 'https://www.flickr.com/people/'+ data.photo.owner.nsid;
                     $scope.active.title = $scope.active.user + ' on Flickr';
@@ -100,15 +102,25 @@ angular.module('app.flickr', [
               }
             }
 
-            $scope.submit = function() {
-              //$scope.filters.page++;
-              console.log($scope.selected);
+            $scope.submit = function($event) {
+              $scope.queue = {total: $scope.selected.length, completed: 0, files: []};
+              angular.forEach($scope.selected, function(item, key) {
+                var file = new CoreFile(item);
+                file.$save(function(data) {
+                  $scope.queue.completed ++;
+                  $scope.queue.files[key] = data;
+                  $scope.queue.progress = $scope.queue.completed / $scope.queue.total;
 
-              Array.prototype.push.apply($rootScope.files, $scope.selected);
-              $state.go('base');
+                  // Done processing queue
+                  if ($scope.queue.completed >= $scope.queue.total) {
+                    Array.prototype.push.apply($rootScope.files, $scope.queue.files);
+                    $scope.queue = undefined;
+                    $state.go('base');
+                  }
+                });
+              });
 
-              //var newData = Flickr.load($scope.filters);
-              //Array.prototype.push.apply($scope.items, newData);
+              $event.preventDefault();
             }
             
             /*$scope.constructUrl = function(item, size) {
