@@ -3,10 +3,8 @@
 
   <div class="modal-box">
 
-    <ul class="nav nav-tabs">
-      <li role="presentation" ui-sref-active="active"><a href ui-sref="modal.upload">Upload</a></li>
-      <li role="presentation" ui-sref-active="active"><a href ui-sref="modal.browse({person: 'all'})">Site Files</a></li>
-      <li role="presentation" ui-sref-active="active"><a href ui-sref="modal.flickr">Flickr</a></li>
+    <ul class="nav nav-tabs" ng-if="activeTab != 'edit'">
+      <li ng-repeat="tab in tabs" role="presentation" ng-class="activeTab == tab.key ? 'active' : ''"><a href ng-click="loadTab(tab)">{{tab.title}}</a></li>
     </ul>
     
     <div ui-view></div>

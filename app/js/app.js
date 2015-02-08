@@ -6,26 +6,29 @@
 
 //***************************************
 
+(function ($) {
+
 angular.module('app', [
   'app.core',
   'app.flickr',
   'ui.router',
   //'ui.bootstrap',
-  'ngSanitize',
+  //'ngSanitize',
   //'ngAnimate', // @todo: caused bugs w ng-include: https://github.com/angular/angular.js/issues/8900
-  'ngTouch',
+  //'ngTouch',
   'ngResource',
   //'afkl.lazyImage',
   'infinite-scroll',
   'angularFileUpload',
-  'ngImgCrop'
+  //'ngImgCrop',
+  'xeditable',
+  'ngJcrop'
   //'wu.masonry'
 ])
 
 .run(
-  [          '$rootScope', '$state', '$stateParams', '$window', '$location', '$timeout',
-    function ($rootScope,   $state,   $stateParams,   $window,   $location, $timeout) {
-
+  [          '$rootScope', '$state', '$stateParams', '$window', '$location', '$timeout', 'editableOptions',
+    function ($rootScope,   $state,   $stateParams,   $window,   $location, $timeout, editableOptions) {
 
       $rootScope.flickrApiKey = '5202f8e46861f39f55bedfa2374a41d8';
       $rootScope.apiUrlUpload = 'http://liftoff.local/api/angular-media/';
@@ -33,6 +36,14 @@ angular.module('app', [
       $rootScope.appUrl = '';
       $rootScope.files = [];
       $rootScope.multiple = false;
+      $rootScope.cardinality = 1; // max number of fields
+      $rootScope.tabs = [
+        {key: 'upload', title: 'Upload'},
+        {key: 'browse', title: 'Site Files', params: {person: 'all'}},
+        {key: 'flickr', title: 'Flickr'}
+      ];
+
+      editableOptions.theme = 'bs3';
 
       // It's very handy to add references to $state and $stateParams to the $rootScope
       // @todo: bad for performance?
@@ -80,3 +91,4 @@ angular.module('app', [
   ]
 );
 
+}(jQuery));

@@ -11,7 +11,7 @@ angular.module('app.flickr', [
       $stateProvider
         
          .state("modal.flickr", {
-          url: "/flickr",
+          //url: "/flickr",
           templateUrl: appUrl + 'views/flickr.html',
           controller: function($scope, $rootScope, $state, Flickr, CoreFile){
             $scope.filters = {

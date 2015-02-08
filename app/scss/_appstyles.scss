@@ -7,6 +7,14 @@
 // Fade in typekit
 //@import "helpers/typekit";
 
+@mixin ellipsis() {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
+
+
 *
 {
   box-sizing: border-box;
@@ -64,16 +72,14 @@
   }
 
   .thumbnail {
-    width: 100px;
-    height: 120px;
+    width: 120px;
+    height: 140px;
     margin: 10px;
     position: relative;
     float: left;
 
     .thumbnail-title {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
+      @include ellipsis;
       font-size: .9em;
     }
 
@@ -102,6 +108,7 @@
     .btn.media-select {
       display: block;
       position: relative;
+      margin: 0 auto;
     }
 
   }
@@ -114,6 +121,36 @@
     clear: both;
   }
 
+}
+
+.thumbnail-icon {
+  text-align: center;
+  position: relative;
+  width: 100px;
+
+  .file-icon {
+    font-size: 100px;
+    color: #ccc;
+  }
+  .file-icon-text {
+    text-transform: uppercase;
+    color: #fff;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  &.icon-lg {
+    .file-icon {
+      font-size: 180px;
+    }
+    .file-icon-text {
+      width: 180px;
+    }
+  }
 }
 
 .drop-zone,
@@ -146,15 +183,40 @@
   }
 }
 
-form {
-  width: $modal-width;
-  height: $modal-height;
-  position: relative;
+/*
+  form {
+    width: $modal-width;
+    height: $modal-height;
+    position: relative;
 
-  select {
-    max-width: 200px;
+    select {
+      max-width: 200px;
+    }
   }
+*/
+
+.edit-form {
+  .editable-item {
+    height: auto;
+    padding: 5px 0;
+  }
+
+  .title {
+    display: inline-block;
+    font-weight: bold;
+    padding-top: 5px;
+    vertical-align: top;
+    min-width: 90px;
+  }
+
+  .editable {
+    display: inline-block;
+    padding-top: 5px;
+    vertical-align: top;
+  }
+  
 }
+
 
 .browser {
   position: relative;
@@ -209,12 +271,63 @@ form {
     }
     
 
-    .bottom-right {
+    .bottom-right,
+    .bottom-left {
       position: absolute;
       bottom: 10px;
       right: 10px;
-    }
-  } 
 
+      &.bottom-left {
+        left: 10px;
+        right: auto;
+      }
+    }
+  }
+
+  &.upload {
+
+    .queue {
+      margin-top: 5px;
+      height: 185px;
+      overflow-y: auto;
+      margin-left: -30px;
+
+      .queue-item {
+        padding: 7px 5px 7px 30px;
+        cursor: pointer;
+
+        &.active {
+          background-color: #F5F5F5;
+        }
+
+        .file-thumb {
+          float: right;
+          margin-left: 5px;
+        }
+
+        .file-name {
+          @include ellipsis;
+          font-weight: bold;
+        }
+
+        .file-size {
+          float: left;
+          margin-right: 5px;
+        }
+
+        .progress {
+          margin: 3px 5px;
+          height: 12px;
+        }
+      }
+    }
+
+    .file-details {
+      background-color: #F5F5F5;
+      padding: 10px;
+      border-radius: 3px;
+      min-height: 300px;
+    }
+  }
 }
 

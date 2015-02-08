@@ -12,8 +12,12 @@ angular.module('app.core')
   $scope.init = function(params) {
     //$rootScope.appUrl = params.appUrl != undefined ? params.appUrl : '';
     $rootScope.apiUrl = params.apiUrl != undefined ? params.apiUrl : '';
-    $rootScope.multiple = params.multiple != undefined ? params.multiple : false;
-    $rootScope.files = params.files != undefined ? params.files : [];
+    $rootScope.cardinality = params.cardinality != undefined ? parseInt(params.cardinality) : $rootScope.cardinality;
+    $rootScope.multiple = $rootScope.cardinality != 1;
+    $rootScope.files = params.files != undefined ? params.files : $rootScope.files;
+    $rootScope.tabs = params.tabs != undefined ? params.files : $rootScope.tabs;
+    $rootScope.tabs.slice().reverse();
+
       console.log($rootScope);
   console.log(params);
   }
@@ -27,7 +31,16 @@ angular.module('app.core')
   });
 
   $scope.remove = function(key) {
-    console.log('remove');
     $rootScope.files.splice(key, 1);
+  }
+
+  $scope.edit = function(fid) {
+    console.log('edit', fid);
+    $state.go('modal.edit', {fid: fid});
+  }
+
+  $scope.select = function($event) {
+    $state.go('modal.upload');
+    $event.preventDefault();
   }
 })
