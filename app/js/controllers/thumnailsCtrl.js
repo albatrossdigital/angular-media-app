@@ -17,9 +17,8 @@ angular.module('app.core')
     $rootScope.files = params.files != undefined ? params.files : $rootScope.files;
     $rootScope.tabs = params.tabs != undefined ? params.files : $rootScope.tabs;
     $rootScope.tabs.slice().reverse();
-
-      console.log($rootScope);
-  console.log(params);
+    $rootScope.fieldName = params.fieldName != undefined ? params.fieldName : $rootScope.fieldName;
+  console.log('params', params);
   }
 
 
@@ -43,4 +42,9 @@ angular.module('app.core')
     $state.go('modal.upload');
     $event.preventDefault();
   }
+
+  // @todo: make this work instead of doing it in each individual submit() function.
+  //$scope.$watch('files', function() {
+  //  jQuery('#'+$rootScope.fieldName+'_media').trigger('change');
+  //});
 })

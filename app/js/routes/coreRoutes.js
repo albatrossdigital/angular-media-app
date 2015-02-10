@@ -146,13 +146,14 @@ angular.module('app.core', [
     }
   }
 
-  $scope.submit = function() {
+  $scope.submit = function($event) {
     //$scope.filters.page++;
     console.log($scope.selected);
 
     Array.prototype.push.apply($rootScope.files, $scope.selected);
-    angular.element('#'+fieldName+'_media').trigger('change');
+    jQuery('#'+$rootScope.fieldName+'_media').trigger('change');
     $state.go('base');
+    $event.preventDefault();
 
     //var newData = Flickr.load($scope.filters);
     //Array.prototype.push.apply($scope.items, newData);
@@ -211,6 +212,7 @@ angular.module('app.core', [
     console.log($scope.selected);
 
     Array.prototype.push.apply($rootScope.files, $scope.selected);
+    jQuery('#'+$rootScope.fieldName+'_media').trigger('change');
     $scope.selected = [];
     $state.go('base');
 

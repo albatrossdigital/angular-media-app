@@ -116,8 +116,7 @@ angular.module('app.flickr', [
               $scope.queue = {total: $scope.selected.length, completed: 0, files: []};
               angular.forEach($scope.selected, function(item, key) {
                 var file = new CoreFile(item);
-                                    console.log('FILES PRE', item);
-
+                
                 file.$save(function(data) {
                   $scope.queue.completed ++;
                   $scope.queue.files[key] = data;
@@ -126,11 +125,12 @@ angular.module('app.flickr', [
                   // Done processing queue
                   if ($scope.queue.completed >= $scope.queue.total) {
                     Array.prototype.push.apply($rootScope.files, $scope.queue.files);
-                    console.log('FILES POST', $scope.queue.files);
+                    jQuery('#'+$rootScope.fieldName+'_media').trigger('change');
                     $scope.queue = undefined;
                     $state.go('base');
                   }
                 });
+
               });
 
               $event.preventDefault();

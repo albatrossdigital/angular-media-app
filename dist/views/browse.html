@@ -19,7 +19,7 @@
       <!--<div>{{active.size.width}} x {{active.size.height}}</div>-->
       <div><a href ng-href="{{active.license.url}}" target="_blank">{{active.license.name}}</a></div>
       <div ng-if="active.info.photo.dates.taken">Taken: {{active.info.photo.dates.taken}}</div>
-      <button class="btn btn-lg bottom-right" ng-class="selected ? 'btn-success' : 'btn-disabled'" ng-click="submit()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
+      <button class="btn btn-lg bottom-right" ng-class="selected ? 'btn-success' : 'btn-disabled'" ng-click="submit($event)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
     </div>
     <div class="scroll-wrapper" ng-class="{active: active}">
       <div class="items" infinite-scroll="addItems()" infinite-scroll-distance=".1">
