@@ -49,9 +49,12 @@ angular.module('app.flickr', [
               });
             }
 
-            $scope.updateFilters = function() {
+            $scope.updateFilters = function($event) {
               $scope.filters.page = 1;
               $scope.items = $scope.loadItems();
+              if ($event != undefined) {
+                $event.preventDefault();
+              }
             }
             $scope.updateFilters();
             
@@ -78,26 +81,33 @@ angular.module('app.flickr', [
                   }
                   Flickr.load({method: 'flickr.photos.getInfo', photo_id: item.id, secret: item.secret}, function(data) {
                     $scope.active.previewUrl = 'https://farm' + item.farm + '.staticflickr.com/'+ item.server +'/'+ item.id + '_'+ item.secret +'_m.jpg';
-                    $scope.active.url = 'https://farm' + item.farm + '.staticflickr.com/'+ item.server +'/'+ item.id + '_'+ item.secret +'.jpg';  // @todo: try to get original?
+                    //$scope.active.url = 'https://farm' + item.farm + '.staticflickr.com/'+ item.server +'/'+ item.id + '_'+ item.secret +'.jpg';  // @todo: try to get original?
                     $scope.active.name = data.photo.title._content;
+                    $scope.active.alt = $scope.active.name;
                     $scope.active.filename = $scope.active.name + '.jpg';
                     $scope.active.source = data.photo.urls.url[0]._content;
                     $scope.active.user = data.photo.owner.realname ? data.photo.owner.realname : data.photo.owner.username;
                     $scope.active.userLink = 'https://www.flickr.com/people/'+ data.photo.owner.nsid;
                     $scope.active.title = $scope.active.user + ' on Flickr';
-                    $scope.active.license = $scope.licenses.licenses.license[data.photo.license];
-                    if ($rootScope.multiple) {
-                      $scope.selected.push($scope.active);
-                    }
-                    else {
-                      $scope.selected = [$scope.active];
-                    }
+                    $scope.active.license = data.photo.license;
+                    $scope.active.licenseMeta = $scope.licenses.licenses.license[data.photo.license];
+                    
+                    Flickr.load({method: 'flickr.photos.getSizes', photo_id: item.id, secret: item.secret}, function(data) {
+                      var size = data.sizes.size.pop();
+                      $scope.active.width = size.width;
+                      $scope.active.height = size.height;
+                      $scope.active.url = size.source;
+
+                      if ($rootScope.multiple) {
+                        $scope.selected.push($scope.active);
+                      }
+                      else {
+                        $scope.selected = [$scope.active];
+                      }
+                    });
+
                   });
-                  Flickr.load({method: 'flickr.photos.getSizes', photo_id: item.id, secret: item.secret}, function(data) {
-                    var size = data.sizes.size.pop();
-                    $scope.active.width = size.width;
-                    $scope.active.height = size.height;
-                  });
+                  
                 }
               }
             }
@@ -106,6 +116,8 @@ angular.module('app.flickr', [
               $scope.queue = {total: $scope.selected.length, completed: 0, files: []};
               angular.forEach($scope.selected, function(item, key) {
                 var file = new CoreFile(item);
+                                    console.log('FILES PRE', item);
+
                 file.$save(function(data) {
                   $scope.queue.completed ++;
                   $scope.queue.files[key] = data;
@@ -114,6 +126,7 @@ angular.module('app.flickr', [
                   // Done processing queue
                   if ($scope.queue.completed >= $scope.queue.total) {
                     Array.prototype.push.apply($rootScope.files, $scope.queue.files);
+                    console.log('FILES POST', $scope.queue.files);
                     $scope.queue = undefined;
                     $state.go('base');
                   }

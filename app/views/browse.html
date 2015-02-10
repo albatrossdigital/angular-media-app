@@ -6,14 +6,15 @@
       <option value="image">Image</option>
       <option value="video">Video</option>
       <option value="audio">Audio</option>
+      <option value="document">Document</option>
     </select>
     <label for="browse-search">Search</label>
     <input type="text" ng-model="filters.name" class="form-control" id="browse-search" />
-    <input type="submit" value="Submit" class="btn btn-primary" ng-click="updateFilters()" />
+    <input type="submit" value="Submit" class="btn btn-primary" ng-click="updateFilters($event)" />
   </div>
   <div class="browser">
     <div class="sidebar" ng-if="active">
-      <div class="preview"><img src="{{active.path}}" /></div>
+      <div class="preview"><img src="{{active.previewUrl}}" /></div>
       <strong><a href ng-href="{{active.info.photo.urls.url[0]._content}}" target="_blank">{{active.name}}</a></strong>
       <!--<div>{{active.size.width}} x {{active.size.height}}</div>-->
       <div><a href ng-href="{{active.license.url}}" target="_blank">{{active.license.name}}</a></div>
@@ -22,7 +23,10 @@
     </div>
     <div class="scroll-wrapper" ng-class="{active: active}">
       <div class="items" infinite-scroll="addItems()" infinite-scroll-distance=".1">
-        <div ng-repeat="item in items" class="thumb" style="background-image: url('{{item.path}}')" ng-click="updateActive(item)" ng-class="{active: item.active}"></div>
+        <div ng-repeat="file in items" ng-click="updateActive(file)" ng-class="{active: file.active}" class="thumbnail">
+          <div thumbnail></div>
+          <a href class="thumbnail-title">{{file.name}}</a>
+        </div>
       </div>
     </div>
   </div>

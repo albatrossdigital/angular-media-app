@@ -97,13 +97,17 @@ angular.module('app.core', [
       else {
         $scope.items = data;
       }
+      console.log($scope.items);
     });
   }
 
-  $scope.updateFilters = function() {
+  $scope.updateFilters = function($event) {
     $scope.filters.page = 1;
     $scope.items = $scope.loadItems();
     //$scope.photos.constructUrl(item);
+    if ($event != undefined) {
+      $event.preventDefault();
+    }
   }
   $scope.updateFilters();
 
@@ -136,7 +140,7 @@ angular.module('app.core', [
         }
         CoreFile.load({fid: item.fid}, function(data) {
           $scope.active = data;
-          console.log(data);
+          console.log('corefile data', data);
         });
       }
     }
@@ -147,6 +151,7 @@ angular.module('app.core', [
     console.log($scope.selected);
 
     Array.prototype.push.apply($rootScope.files, $scope.selected);
+    angular.element('#'+fieldName+'_media').trigger('change');
     $state.go('base');
 
     //var newData = Flickr.load($scope.filters);
